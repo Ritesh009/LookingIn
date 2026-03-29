@@ -1,4 +1,4 @@
-// LookingIn background.js v1.4
+l// LookingIn background.js v1.5
 var TRACKERS = {
 “google-analytics.com”: “Google”,
 “googletagmanager.com”: “Google”,
@@ -54,7 +54,8 @@ d.s[pageHost] = (d.s[pageHost] || 0) + 1;
 d.h.unshift({ c: company, p: pageHost, t: Date.now() });
 if (d.h.length > 50) d.h.pop();
 chrome.storage.local.set({ li: d });
-chrome.action.setBadgeText({ text: d.n > 99 ? “99+” : String(d.n) });
+var badge = d.n > 99 ? “99+” : String(d.n);
+chrome.action.setBadgeText({ text: badge });
 chrome.action.setBadgeBackgroundColor({ color: “#ff4e4e” });
 });
 }
@@ -66,7 +67,6 @@ var company = getCompany(details.url);
 if (!company) return;
 
 ```
-// Try initiator first
 var pageHost = "";
 try { pageHost = new URL(details.initiator || "").hostname; } catch(e) {}
 
@@ -75,7 +75,6 @@ if (pageHost) {
   return;
 }
 
-// Fall back to tab URL lookup
 if (details.tabId && details.tabId > 0) {
   chrome.tabs.get(details.tabId, function(tab) {
     if (chrome.runtime.lastError || !tab || !tab.url) return;
@@ -98,7 +97,7 @@ var d = r.li || { t: {}, n: 0, s: {}, h: [], ts: Date.now() };
 var list = Object.keys(d.t).map(function(k) {
 return { company: k, count: d.t[k].n, sites: d.t[k].s.length };
 }).sort(function(a, b) { return b.count - a.count; });
-cb({ n: d.n, s: Object.keys(d.s).length, list: list, h: d.h.slice(0,8), ts: d.ts });
+cb({ n: d.n, s: Object.keys(d.s).length, list: list, h: d.h.slice(0, 8), ts: d.ts });
 });
 return true;
 }
