@@ -1,3 +1,4 @@
+// LookingIn background service worker v1.1 - fixed
 var TRACKERS = {
 ‘google-analytics.com’: ‘Google’,
 ‘googletagmanager.com’: ‘Google’,
