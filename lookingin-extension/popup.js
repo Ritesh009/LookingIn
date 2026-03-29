@@ -98,7 +98,7 @@ chrome.runtime.sendMessage({ type: 'GET_STATS' }, stats => {
 
 // Open full report
 document.getElementById('reportBtn').addEventListener('click', () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL('report/index.html') });
+  chrome.tabs.create({ url: 'https://ritesh009.github.io/LookingIn/' });
   window.close();
 });
 
