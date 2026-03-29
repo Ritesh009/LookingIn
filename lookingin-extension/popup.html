@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #080a0f; color: #dde6f0; font-family: system-ui, sans-serif; width: 300px; color-scheme: dark; }
-.header { display: flex; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid #1a2030; }
-.logo { font-size: 14px; font-weight: 700; flex: 1; }
-.reset { background: none; border: none; color: #5a6a7a; font-size: 12px; cursor: pointer; }
-.hero { padding: 14px 12px 10px; border-bottom: 1px solid #1a2030; }
-.num { font-size: 52px; font-weight: 900; color: #ff4e4e; line-height: 1; font-family: Georgia, serif; }
-.lbl { font-size: 13px; font-weight: 600; margin-top: 4px; }
-.sub { font-size: 11px; color: #5a6a7a; margin-top: 2px; }
-#body { padding: 4px 0; }
-.row { display: flex; align-items: center; gap: 8px; padding: 6px 12px; }
-.row:hover { background: #10141c; }
-.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.name { flex: 1; font-size: 13px; font-weight: 600; }
-.cnt { font-size: 11px; color: #5a6a7a; }
-.co { font-size: 11px; font-weight: 700; color: #ff4e4e; width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.pg { flex: 1; font-size: 11px; color: #5a6a7a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.tm { font-size: 10px; color: #5a6a7a; }
-.label { font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #5a6a7a; padding: 8px 12px 2px; }
-.empty { padding: 16px 12px; font-size: 12px; color: #5a6a7a; text-align: center; }
-.footer { padding: 8px 12px; border-top: 1px solid #1a2030; }
-.btn { width: 100%; background: #3ddc84; color: #000; font-weight: 800; font-size: 13px; border: none; border-radius: 20px; padding: 8px; cursor: pointer; font-family: inherit; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:#080a0f;color:#dde6f0;font-family:system-ui,sans-serif;width:260px;color-scheme:dark;}
+.wrap{padding:1.4rem 1.2rem 1rem;}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+.logo{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;font-weight:700;color:#5a6a7a;}
+.reset{background:none;border:none;color:#5a6a7a;font-size:0.7rem;cursor:pointer;font-family:inherit;}
+.reset:hover{color:#ff4e4e;}
+.hit{text-align:center;padding:0.5rem 0 1rem;}
+.num{font-size:5rem;font-weight:900;color:#ff4e4e;line-height:1;font-family:Georgia,serif;letter-spacing:-0.04em;}
+.num.zero{color:#3a4a5a;}
+.label{font-size:0.85rem;font-weight:600;margin-top:0.4rem;}
+.sub{font-size:0.72rem;color:#5a6a7a;margin-top:0.2rem;}
+.pulse{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#ff4e4e;margin-top:0.8rem;}
+.pulse::before{content:'';width:6px;height:6px;border-radius:50%;background:#ff4e4e;animation:p 1.5s infinite;}
+@keyframes p{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.3;transform:scale(1.5);}}
+.empty-msg{font-size:0.78rem;color:#5a6a7a;text-align:center;padding:0.5rem 0 0.8rem;line-height:1.6;}
+.btn{display:block;width:100%;background:#3ddc84;color:#000;font-weight:800;font-size:0.82rem;border:none;border-radius:20px;padding:0.6rem;cursor:pointer;font-family:inherit;}
+.btn:hover{opacity:0.88;}
 </style>
 </head>
 <body>
-<div class="header">
-  <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
-    <line x1="20" y1="7" x2="20" y2="15" stroke="#3ddc84" stroke-width="2.5" stroke-linecap="round"/>
-    <rect x="7" y="15" width="18" height="11" rx="3" fill="#3ddc84"/>
-    <circle cx="20" cy="20.5" r="3.5" fill="#080a0f" stroke="#3ddc84" stroke-width="1.2"/>
-    <circle cx="20" cy="20.5" r="1.4" fill="#3ddc84"/>
-    <circle cx="11" cy="20.5" r="1.2" fill="#ff4e4e"/>
-    <path d="M25 17.5 L32 14 L32 27 L25 23.5 Z" fill="#3ddc84"/>
-  </svg>
-  <span class="logo">LookingIn</span>
-  <button class="reset" id="reset">Reset</button>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">
+      <svg width="16" height="16" viewBox="0 0 40 40" fill="none">
+        <line x1="20" y1="7" x2="20" y2="15" stroke="#3ddc84" stroke-width="2.5" stroke-linecap="round"/>
+        <rect x="7" y="15" width="18" height="11" rx="3" fill="#3ddc84"/>
+        <circle cx="20" cy="20.5" r="3.5" fill="#080a0f" stroke="#3ddc84" stroke-width="1.2"/>
+        <circle cx="20" cy="20.5" r="1.4" fill="#3ddc84"/>
+        <circle cx="11" cy="20.5" r="1.2" fill="#ff4e4e"/>
+        <path d="M25 17.5 L32 14 L32 27 L25 23.5 Z" fill="#3ddc84"/>
+      </svg>
+      LookingIn
+    </div>
+    <button class="reset" id="reset">Reset</button>
+  </div>
+  <div class="hit">
+    <div class="num zero" id="num">0</div>
+    <div class="label">trackers watching you</div>
+    <div class="sub" id="sub" style="display:none;">across <span id="sites">0</span> sites</div>
+    <div class="pulse" id="pulse" style="display:none;">Watching now</div>
+    <div class="empty-msg" id="empty">Browse normally.<br>Trackers will appear here.</div>
+  </div>
+  <button class="btn" id="report">See who &rarr;</button>
 </div>
-<div class="hero">
-  <div class="num" id="num">...</div>
-  <div class="lbl">trackers watching you</div>
-  <div class="sub">across <span id="sites">-</span> sites</div>
-</div>
-<div id="body"><div class="empty">Loading...</div></div>
-<div class="footer"><button class="btn" id="report">See full story</button></div>
 <script src="popup.js"></script>
 </body>
 </html>
