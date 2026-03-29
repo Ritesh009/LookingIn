@@ -1,4 +1,4 @@
-// LookingIn background.js v1.3
+// LookingIn background.js v1.4
 var TRACKERS = {
 “google-analytics.com”: “Google”,
 “googletagmanager.com”: “Google”,
@@ -6,6 +6,7 @@ var TRACKERS = {
 “googlesyndication.com”: “Google”,
 “googleadservices.com”: “Google”,
 “ssl.google-analytics.com”: “Google”,
+“googleapis.com”: “Google”,
 “facebook.com”: “Meta”,
 “facebook.net”: “Meta”,
 “connect.facebook.net”: “Meta”,
@@ -25,7 +26,9 @@ var TRACKERS = {
 “newrelic.com”: “Other”,
 “nr-data.net”: “Other”,
 “segment.io”: “Other”,
-“segment.com”: “Other”
+“segment.com”: “Other”,
+“adobedtm.com”: “Adobe”,
+“omtrdc.net”: “Adobe”
 };
 
 function getCompany(url) {
@@ -40,15 +43,20 @@ if (host.endsWith(”.” + keys[i])) return TRACKERS[keys[i]];
 return null;
 }
 
-function getPageHost(details) {
-var src = details.initiator || details.documentUrl || details.originUrl || “”;
-try { return new URL(src).hostname; } catch(e) {}
-if (details.tabId && details.tabId > 0) {
-try {
-chrome.tabs.get(details.tabId, function(tab) {});
-} catch(e) {}
-}
-return “”;
+function record(company, pageHost) {
+chrome.storage.local.get(“li”, function(r) {
+var d = r.li || { t: {}, n: 0, s: {}, h: [], ts: Date.now() };
+if (!d.t[company]) d.t[company] = { n: 0, s: [] };
+d.t[company].n++;
+if (d.t[company].s.indexOf(pageHost) < 0) d.t[company].s.push(pageHost);
+d.n++;
+d.s[pageHost] = (d.s[pageHost] || 0) + 1;
+d.h.unshift({ c: company, p: pageHost, t: Date.now() });
+if (d.h.length > 50) d.h.pop();
+chrome.storage.local.set({ li: d });
+chrome.action.setBadgeText({ text: d.n > 99 ? “99+” : String(d.n) });
+chrome.action.setBadgeBackgroundColor({ color: “#ff4e4e” });
+});
 }
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -56,23 +64,27 @@ function(details) {
 if (details.type === “main_frame”) return;
 var company = getCompany(details.url);
 if (!company) return;
-var pageHost = getPageHost(details);
-if (!pageHost) pageHost = “unknown”;
 
 ```
-chrome.storage.local.get("li", function(r) {
-  var d = r.li || { t: {}, n: 0, s: {}, h: [], ts: Date.now() };
-  if (!d.t[company]) d.t[company] = { n: 0, s: [] };
-  d.t[company].n++;
-  if (d.t[company].s.indexOf(pageHost) < 0) d.t[company].s.push(pageHost);
-  d.n++;
-  if (pageHost !== "unknown") d.s[pageHost] = (d.s[pageHost] || 0) + 1;
-  d.h.unshift({ c: company, p: pageHost, t: Date.now() });
-  if (d.h.length > 50) d.h.pop();
-  chrome.storage.local.set({ li: d });
-  chrome.action.setBadgeText({ text: d.n > 99 ? "99+" : String(d.n) });
-  chrome.action.setBadgeBackgroundColor({ color: "#ff4e4e" });
-});
+// Try initiator first
+var pageHost = "";
+try { pageHost = new URL(details.initiator || "").hostname; } catch(e) {}
+
+if (pageHost) {
+  record(company, pageHost);
+  return;
+}
+
+// Fall back to tab URL lookup
+if (details.tabId && details.tabId > 0) {
+  chrome.tabs.get(details.tabId, function(tab) {
+    if (chrome.runtime.lastError || !tab || !tab.url) return;
+    try {
+      var host = new URL(tab.url).hostname;
+      if (host) record(company, host);
+    } catch(e) {}
+  });
+}
 ```
 
 },
