@@ -444,6 +444,15 @@
 </footer>
 
 <script>
+window.__extData = null;
+try{
+  var h = window.location.hash;
+  if(h && h.indexOf('data=')>=0){
+    window.__extData = JSON.parse(atob(h.split('data=')[1]));
+  }
+}catch(e){}
+</script>
+<script>
   // Scroll reveal
   const obs = new IntersectionObserver(es => {
     es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
