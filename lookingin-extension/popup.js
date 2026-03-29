@@ -1,3 +1,4 @@
+// LookingIn popup v1.1 - fixed
 var COLORS = {
 ‘Google’: ‘#ff4e4e’, ‘Meta’: ‘#4ea8ff’, ‘TikTok’: ‘#ff6eb4’,
 ‘Microsoft’: ‘#00aaff’, ‘Twitter/X’: ‘#1d9bf0’, ‘LinkedIn’: ‘#0a66c2’,
